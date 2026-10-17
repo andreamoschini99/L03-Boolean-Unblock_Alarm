@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Unblock Alarm - Sveglia Intelligente</title>
+
+  <!-- Google Fonts: Inter e Material Symbols Rounded -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
+
+  <!-- Foglio di stile esterno -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- =========================================================
+       STRUTTURA SEMANTICA PRINCIPALE (MOBILE-FIRST VIEWPORT)
+       ========================================================= -->
+  <div class="app-viewport">
+
+    <!-- Barra di stato superiore (simulazione nativa) -->
+    <header class="status-bar">
+      <span>07:00</span>
+      <div class="status-icons">
+        <!-- Controllo audio semantico con label e input -->
+        <label class="sound-toggle-label" title="Attiva/Disattiva audio sveglia" for="sound-switch">
+          <input type="checkbox" id="sound-switch" checked />
+          <span class="material-symbols-rounded sound-icon" id="sound-icon-display">volume_up</span>
+        </label>
+        <span class="material-symbols-rounded">signal_cellular_4_bar</span>
+        <span class="material-symbols-rounded">wifi</span>
+        <span class="material-symbols-rounded">battery_full</span>
+      </div>
+    </header>
+
+    <main style="display: flex; flex-direction: column; flex: 1;">
+
+      <!-- Sezione orologio e stato della sveglia -->
+      <section class="alarm-header">
+        <div class="badge-alarm">
+          <span class="material-symbols-rounded">alarm</span>
+          <span>UNBLOCK ALARM</span>
+        </div>
+
+        <!-- Orario con pulsazione continua che simula lo squillo attivo -->
+        <h1 class="alarm-time alarm-ringing" id="alarm-clock">07:30</h1>
+
+        <p class="alarm-subtitle">Dimostra che sei sveglio</p>
+
+        <div class="instruction-pill">
+          Trascina il blocco <span class="accent">STOP</span> verso l'uscita →
+        </div>
+      </section>
+
+      <!-- Vassoio meccanico con puzzle 6x6 -->
+      <section class="puzzle-section" aria-label="Puzzle della sveglia">
+        <div class="tray-wrapper">
+
+          <!-- Alone luminoso che segnala il varco -->
+          <div class="exit-glow-beacon"></div>
+
+          <!-- Struttura vassoio e scacchiera -->
+          <div class="puzzle-tray">
+            <div class="puzzle-board" id="puzzle-board">
+
+              <!-- Texture di sfondo a celle per effetto griglia -->
+              <div class="grid-slots-bg">
+                <div class="slot-cell"></div><div class="slot-cell"></div><div class="slot-cell"></div><div class="slot-cell"></div><div class="slot-cell"></div><div class="slot-cell"></div>
+                <div class="slot-cell"></div><div class="slot-cell"></div><div class="slot-cell"></div><div class="slot-cell"></div><div class="slot-cell"></div><div class="slot-cell"></div>
+                <div class="slot-cell"></div><div class="slot-cell"></div><div class="slot-cell"></div><div class="slot-cell"></div><div class="slot-cell"></div><div class="slot-cell"></div>
+                <div class="slot-cell"></div><div class="slot-cell"></div><div class="slot-cell"></div><div class="slot-cell"></div><div class="slot-cell"></div><div class="slot-cell"></div>
+                <div class="slot-cell"></div><div class="slot-cell"></div><div class="slot-cell"></div><div class="slot-cell"></div><div class="slot-cell"></div><div class="slot-cell"></div>
+                <div class="slot-cell"></div><div class="slot-cell"></div><div class="slot-cell"></div><div class="slot-cell"></div><div class="slot-cell"></div><div class="slot-cell"></div>
+              </div>
+
+              <!-- I blocchi verranno renderizzati dinamicamente dal JavaScript -->
+
+              <!-- Indicatore del Varco d'uscita sulla riga 2 a destra -->
+              <div class="exit-marker">
+                <div class="exit-gate-border"></div>
+                <span class="exit-label">VARCO</span>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Telemetria mosse e livello -->
+        <div class="telemetry-row">
+          <div class="telemetry-pill">
+            <span class="pulse-dot"></span>
+            <span>MOSSE EFFETTUATE: <span class="stat-number" id="moves-counter">00</span> &nbsp;|&nbsp; LIVELLO: <span class="stat-number" id="level-counter">1</span></span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Zona inferiore: pulsante Snooze e avviso punitivo -->
+      <section class="bottom-zone">
+        <button class="btn-snooze" id="snooze-button" type="button">
+          <span class="material-symbols-rounded">warning</span>
+          <span>Snooze (5 min)</span>
+        </button>
+
+        <p class="penalty-warning">
+          Attenzione: al prossimo squillo il puzzle sarà più difficile
+        </p>
+
+        <!-- Barra Home indicatrice iOS -->
+        <div class="home-indicator"></div>
+      </section>
+
+    </main>
+
+    <!-- Schermata di vittoria mostrata al completamento -->
+    <div class="victory-overlay" id="victory-screen">
+      <div class="victory-icon-wrap">
+        <span class="material-symbols-rounded">alarm_off</span>
+      </div>
+      <h2 class="victory-title">Sveglia disattivata!<br>Buongiorno</h2>
+      <p class="victory-text" id="victory-summary">
+        Complimenti, hai liberato il varco e attivato i tuoi riflessi per iniziare la giornata al meglio!
+      </p>
+      <button class="btn-restart" id="restart-button" type="button">
+        Reimposta Sveglia
+      </button>
+    </div>
+
+  </div>
+
+  <!-- Script logico esterno -->
+  <script src="script.js"></script>
+</body>
+</html>
